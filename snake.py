@@ -7,10 +7,9 @@ Exercises
 3. How would you move the food?
 4. Change the snake to respond to mouse clicks.
 """
+ main
 from random import randrange, choice
-from random import randrange
 from turtle import *
-
 from freegames import square, vector
 
 food = vector(0, 0)
@@ -33,6 +32,15 @@ def inside(head):
     """Return True if head inside boundaries."""
     return -200 < head.x < 190 and -200 < head.y < 190
 
+def click_to_go(x, y):
+    """Cambia la dirección hacia donde hagas clic con el mouse."""
+    head = snake[-1]
+    dx = x - head.x
+    dy = y - head.y
+    if abs(dx) > abs(dy):
+        change(10 if dx > 0 else -10, 0)
+    else:
+        change(0, 10 if dy > 0 else -10)
 
 def move():
     """Move snake forward one segment."""
@@ -72,5 +80,6 @@ onkey(lambda: change(10, 0), 'Right')
 onkey(lambda: change(-10, 0), 'Left')
 onkey(lambda: change(0, 10), 'Up')
 onkey(lambda: change(0, -10), 'Down')
+onscreenclick(click_to_go)
 move()
 done()
